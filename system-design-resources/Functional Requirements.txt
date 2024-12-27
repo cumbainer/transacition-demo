@@ -1,0 +1,35 @@
+Functional Requirements
+1. Enum Enhancement: Refactor the isFinal method in the TransactionStatus enum to implement a more efficient
+or maintainable solution.
+
+2. Request Validation: Implement request DTO validation in TransactionController using the @Validated annotation.
+Ensure that:
+2.1) Invalid requests result in a 400 Bad Request response.
+2.2) Validation error details are included in the response.
+2.3) Conflict Handling: Prevent duplication of the reference column.
+If the same reference is used, respond with a 409 Conflict.
+
+3. Transaction Status Update: Implement a robust transaction status update mechanism:
+3.1) Skip updates if the status remains unchanged.
+3.1) Disallow updates if the current status is final.
+3.2) Use a transactional approach to ensure all changes are rolled back if an error occurs.
+
+4. Balance Adjustment:
+4.1. Withdrawal Transactions:
+4.1.1) Subtract the amount from the balance when creating the transaction.
+4.1.2) If the transaction fails, return the amount to the balance.
+
+4.2. Deposit Transactions:
+4.2.1) Add the amount to the balance upon success.
+4.2.2) Use a transactional approach to ensure consistency.
+
+5. Event Publishing:
+5.1) Publish events to the Kafka topic transaction on transaction creation and updates.
+5.2) Use org.springframework.context.ApplicationEventPublisher instead of direct event publishing in TransactionService.
+
+6. Kafka Listener:
+6.1) Implement a Kafka listener to consume messages from the transaction topic.
+6.2) Save consumed messages into the MongoDB transaction collection using TransactionDocumentRepository.
+
+Project Cleanup:
+Address all TODO comments in the codebase, ensuring all tasks are either implemented or removed.
