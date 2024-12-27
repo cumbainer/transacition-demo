@@ -30,6 +30,3 @@ If the same reference is used, respond with a 409 Conflict.
 6. Kafka Listener:
 6.1) Implement a Kafka listener to consume messages from the transaction topic.
 6.2) Save consumed messages into the MongoDB transaction collection using TransactionDocumentRepository.
-
-Project Cleanup:
-Address all TODO comments in the codebase, ensuring all tasks are either implemented or removed.
