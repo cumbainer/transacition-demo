@@ -6,6 +6,7 @@ import com.example.demo.model.Transaction;
 import com.example.demo.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,7 +21,9 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping
-    public TransactionCreateResponse create(@RequestBody final TransactionCreateRequest dto) {
+    public TransactionCreateResponse create(@RequestBody @Validated final TransactionCreateRequest dto) {
+        log.info("Creating transaction with reference: {}", dto.reference());
+
         Transaction transaction = transactionService.create(
                 dto.type(),
                 dto.reference(),

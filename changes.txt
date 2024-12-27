@@ -1,0 +1,4 @@
+LIST OF CHANGED FROM THE INITIAL CODE BASE
+
+1. Refactored TransactionCreate Request,Response objects to record
+2.

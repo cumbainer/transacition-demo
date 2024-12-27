@@ -30,7 +30,7 @@ public class DefaultTransactionService implements TransactionService {
         Balance balance = balanceService.getOrCreate(currency);
 
         return transactionRepository.save(new TransactionEntity(
-                balance.getId(),
+                balance,
                 reference,
                 type,
                 amount,

@@ -16,7 +16,7 @@ public class DefaultBalanceService implements BalanceService {
 
     @Override
     public Balance getOrCreate(String currency) {
-        return balanceRepository.findByCurrency(currency)
+        return balanceRepository.findByCurrencyCode(currency)
                 .orElseGet(() -> balanceRepository.save(new BalanceEntity(currency)));
     }
 }

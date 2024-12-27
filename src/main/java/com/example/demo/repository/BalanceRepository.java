@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface BalanceRepository extends JpaRepository<BalanceEntity, Long> {
 
-    Optional<BalanceEntity> findByCurrency(String currency);
+    Optional<BalanceEntity> findByCurrencyCode(String currency);
 }

@@ -8,5 +8,5 @@ public interface Balance {
 
     BigDecimal getAmount();
 
-    String getCurrency();
+    String getCurrencyCode();
 }

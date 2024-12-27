@@ -20,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 @Table(
         name = "balance",
@@ -34,32 +35,27 @@ import java.time.LocalDateTime;
 public class BalanceEntity implements Balance {
 
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Getter
     @Column(name = "amount", precision = 27, scale = 18)
     private BigDecimal amount;
 
-    @Getter
     @Column(name = "currency", nullable = false)
-    private String currency;
+    private String currencyCode;
 
-    @Getter
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Getter
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public BalanceEntity(
-            @NonNull final String currency
+            @NonNull final String currencyCode
     ) {
         this.amount = BigDecimal.ZERO;
-        this.currency = currency;
+        this.currencyCode = currencyCode;
     }
 }

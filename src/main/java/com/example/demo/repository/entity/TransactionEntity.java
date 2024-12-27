@@ -3,28 +3,15 @@ package com.example.demo.repository.entity;
 import com.example.demo.model.Transaction;
 import com.example.demo.model.TransactionStatus;
 import com.example.demo.model.TransactionType;
-import com.example.demo.repository.converter.TransactionStatusConverter;
-import com.example.demo.repository.converter.TransactionTypeConverter;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 @Table(
         name = "transaction",
@@ -39,54 +26,46 @@ import java.time.LocalDateTime;
 public class TransactionEntity implements Transaction {
 
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Getter
-    @Column(name = "balance_id", nullable = false, updatable = false)
-    private long balanceId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "balance_id", nullable = false, updatable = false)
+    private BalanceEntity balance;
 
-    @Getter
-    @Convert(converter = TransactionTypeConverter.class)
+    @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false, updatable = false)
     private TransactionType type;
 
-    @Getter
-    @Convert(converter = TransactionStatusConverter.class)
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, updatable = false)
     private TransactionStatus status;
 
-    @Getter
     @Column(name = "reference", length = 64, nullable = false, updatable = false)
     private String reference;
 
-    @Getter
     @Column(name = "amount", precision = 27, scale = 18)
     private BigDecimal amount;
 
-    @Getter
     @Column(name = "currency", nullable = false)
     private String currency;
 
-    @Getter
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Getter
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     public TransactionEntity(
-            final long balanceId,
+            final BalanceEntity balance,
             @NonNull final String reference,
             @NonNull final TransactionType type,
             @NonNull final BigDecimal amount,
             @NonNull final String currency
     ) {
-        this.balanceId = balanceId;
+        this.balance = balance;
         this.reference = reference;
         this.amount = amount;
         this.currency = currency;
