@@ -14,6 +14,8 @@ public interface TransactionService {
 
     Transaction toError(long id);
 
+    Transaction toProcessing(long id);
+
     Optional<Transaction> find(long id);
 
     default Transaction get(final long id) {

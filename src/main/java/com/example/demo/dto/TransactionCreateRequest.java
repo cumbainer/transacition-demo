@@ -19,10 +19,10 @@ public record TransactionCreateRequest(
         @DecimalMin(value = "0.0", inclusive = false, message = "Amount must be greater than zero")
         BigDecimal amount,
 
-        @JsonProperty("currency")
+        @JsonProperty("currencyCode")
         @NotBlank(message = "Currency must not be blank")
         @Pattern(regexp = "^[A-Z]{3}$", message = "Currency must be a 3-letter uppercase code")
-        String currency,
+        String currencyCode,
 
         @JsonProperty("reference")
         @NotBlank(message = "Reference must not be blank")

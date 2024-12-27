@@ -1,19 +1,8 @@
 package com.example.demo.repository.entity;
 
 import com.example.demo.model.Balance;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,7 +14,7 @@ import java.time.LocalDateTime;
 @Table(
         name = "balance",
         uniqueConstraints = {
-                @UniqueConstraint(name = "balance_currency_unique", columnNames = {"currency"})
+                @UniqueConstraint(name = "balance_currency_unique", columnNames = {"currencyCode"})
         }
 )
 @AllArgsConstructor
@@ -39,9 +28,10 @@ public class BalanceEntity implements Balance {
     private long id;
 
     @Column(name = "amount", precision = 27, scale = 18)
+    @Setter
     private BigDecimal amount;
 
-    @Column(name = "currency", nullable = false)
+    @Column(name = "currencyCode", nullable = false)
     private String currencyCode;
 
     @CreationTimestamp
