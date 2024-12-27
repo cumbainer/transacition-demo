@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.TransactionCreateRequestDTO;
-import com.example.demo.dto.TransactionCreateResponseDTO;
+import com.example.demo.dto.TransactionCreateRequest;
+import com.example.demo.dto.TransactionCreateResponse;
+import com.example.demo.model.Transaction;
 import com.example.demo.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +20,14 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping
-    public TransactionCreateResponseDTO create(@RequestBody final TransactionCreateRequestDTO dto) {
-        var transaction = transactionService.create(
-                dto.getType(),
-                dto.getReference(),
-                dto.getAmount(),
-                dto.getCurrency()
+    public TransactionCreateResponse create(@RequestBody final TransactionCreateRequest dto) {
+        Transaction transaction = transactionService.create(
+                dto.type(),
+                dto.reference(),
+                dto.amount(),
+                dto.currency()
         );
 
-        return new TransactionCreateResponseDTO(transaction.getId());
+        return new TransactionCreateResponse(transaction.getId());
     }
 }
